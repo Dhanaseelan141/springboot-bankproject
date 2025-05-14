@@ -9,7 +9,7 @@ var accountholders = document.getElementById("total-account-holders");
 var totalCredit = document.getElementById("total-credit-balance");
 var totalOutstanding = document.getElementById("total-outstanding");
 var customerTableBody = document.getElementById("customer-details-table");
-fetch("http://localhost:8080/api/customer")
+fetch("https://satisfied-recreation-production.up.railway.app/api/customer")
 .then(response => response.json())
 .then(data =>{
     data.forEach(items =>{
