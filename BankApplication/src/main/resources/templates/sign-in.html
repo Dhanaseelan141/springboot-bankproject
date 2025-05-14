@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-page-container">
+        <div class="login-page">
+            <h2>Ds Bank</h2>
+            <h3>Login Page</h3>
+            <form th:action="@{/bank/login}" method="post">
+                <input type="text" name="username" placeholder="User Name" required>
+                <input type="password" name="password" placeholder="password" required>
+                <input type="submit" class="login-button" value="Log In">
+                <p>Don't have an Account?<a style="text-decoration : none;" href="/bank/register"> Create Account</a></p>
+                <p id="logoutMessage" th:if="${param.logout}" class="fade-out-message">You have been logged out successfully.</p>
+                <p id="errorMessage" th:if="${param.error}" class="fade-out-message">Bad credentials.</p>
+            </form>  
+        </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

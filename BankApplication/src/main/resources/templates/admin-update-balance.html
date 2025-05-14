@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http;//www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="login-page-container">
+  <div class="login-page">
+      <h3>Update Balance</h3>
+        <form th:action="@{/bank/users/balanceamount/save}"  th:method="post">
+          <input type="hidden" name="_method" value="patch" />
+          <input type="hidden" th:value="${id}" name="id" >
+          <input type="text" th:value="${accountBalances}" name="accountBalance" required>
+          <input type="submit" class="login-button" value="Update">
+        </form>
+  </div>
+</div>
+</body>
+</html>

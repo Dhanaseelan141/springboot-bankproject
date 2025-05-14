@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Main Page</title>
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+   <body>
+      <div class="account-process" style="text-align : center;" th:if="${customerDetail.opening_action == 'NOT_APPROVED'}"> Your account is still being processed and is not yet complete. Please check back later.</div>
+      <div class="account-process" style="text-align : center;" th:if="${customerDetail.opening_action == 'CLOSE_REQUEST'}"> The admin team is still reviewing the account closure.</div>
+      <div class="menu-icon" onclick="toggleSidebar()" id="menuToggle" th:if="${customerDetail.opening_action == 'APPROVED'}">☰</div>
+      <div class="slide-bar-container closed" id="sidebar" th:if="${customerDetail.opening_action == 'APPROVED'}" >
+         <h1 style="text-align: center;color: #e4e5e8;padding: 20px;"onclick="toggleSidebar()">Ds Bank</h1>
+         <div class="slide-bar-items active" data-target="dashboard">Dashboard</div>
+         <div class="slide-bar-items" data-target="transfer">Transfer Funds</div>
+         <div class="slide-bar-items" data-target="history">Transaction History</div>
+         <div class="slide-bar-items" data-target="creditcard">Credit Card</div>
+         <div class="slide-bar-items" data-target="deposit">Deposit</div>
+         <div class="slide-bar-items" data-target="forgot">Forgot Password</div>
+         <div class="slide-bar-items" data-target="close">Close Account</div>
+         <div class="slide-bar-items" id="logoutButton">
+            <form th:action="@{/bank/logout}" method="post">
+               <button type="submit" style="background-color: transparent; outline : none ; border:none; color: #e4e5e8;
+  opacity: 0.8;font-size:16px;">Logout</button>
+            </form>
+         </div>
+      </div>
+      <div class="content-container" th:if="${customerDetail.opening_action == 'APPROVED'}">
+         <div id="dashboard" class="content-selection active">
+            <h3 class="welcome-message" th:text="'Welcome, ' + ${customerDetail.lastName} "></h3>
+            <h1>Dashboard</h1>
+            <div class="balance-container active">
+               <div class="accountNumber">
+                  <p>Account Number</p>
+                  <p th:text="${accountDetail[0].accountNumber}"></p>
+               </div>
+               <div class="balance">
+                  <p>Account Balance</p>
+                  <p th:text="'₹ ' + ${balanceDetail.accountBalance}">₹</p>
+               </div>
+               <div class="lien-balance">
+                  <p>Lien Balance</p>
+                  <p th:text="'₹ ' + ${balanceDetail.lienBalance}"></p>
+               </div>
+               <div class="credit-score">
+                  <p>Credit Score</p>
+                  <p th:text="${balanceDetail.creditScore}"></p>
+               </div>
+               <div class="wallet">
+                  <p>CreditCard Number</p>
+                  <p th:text="${accountDetail[1].accountNumber}"></p>
+               </div>
+               <div class="credit-outstanding">
+                  <p>Outstanding Balance</p>
+                  <p th:text="'₹ ' +${balanceDetail.outstandingBalance}"></p>
+               </div>
+               <div class="cif">
+                  <p>CIF Number</p>
+                  <p th:text="${accountDetail[0].cifNumber}"></p>
+               </div>
+               <div class="credit-card">
+                  <p>Credit balance</p>
+                  <p th:text="'₹ ' +${balanceDetail.creditCardBalance}"></p>
+               </div>
+               <p style="background-color : #FF0000;color:white;" id="errorMessage" th:if="${param.creditcard}" class="fade-out-message">You are not eligible for a credit card.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.maximumlimit}" class="fade-out-message">You reached the maximum credit limit.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.maximum}" class="fade-out-message">The maximum deposit amount is 2000000.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.invalidaccount}" class="fade-out-message">Other than your bank accounts, the amount cannot be deposited.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.insufficient}" class="fade-out-message">Insufficient Balance.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.same}" class="fade-out-message">The account number cannot be the same.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.confirmAccount}" class="fade-out-message">The account number and the confirmed account number must match.</p>
+                <p style="background-color : #FF0000;color:white;" th:if="${param.activatecredit}" class="fade-out-message">Activate the credit card in the credit card section.</p>
+                <p style="background-color : #FF0000;color:white;" th:if="${param.receivercredit}" class="fade-out-message">The receiver's credit card is not active.</p>
+                <p style="background-color : #FF0000;color:white;" th:if="${param.invalidreceiver}" class="fade-out-message">The receiver's account is invalid.</p>
+               <p style="background-color : #FF0000;color:white;" th:if="${param.invalidpassword}" class="fade-out-message">The password and confirm password must be same.</p>
+            </div>
+         </div>
+         <div id="transfer" class="content-selection">
+            <div class="tranfer-fund-container">
+               <div class="tranfer-fund">
+                  <h2>
+                  Transfer fund</h2>
+                  <form th:action="@{/bank/transfer/fund}" method="post">
+                     <input type="hidden" name="id" th:value="${customerDetail.id}">
+                     <input type="text" placeholder="Beneficiary Name" required>
+                     <select  class="dropdown" name="account" >
+                        <option disabled selected>--Select Option--</option>
+                        <option th:text="${accountDetail[0].accountNumber}" th:value="${accountDetail[0].accountNumber}"></option>
+                        <option th:text="${accountDetail[1].accountNumber}" th:value="${accountDetail[1].accountNumber}"></option>
+                     </select>
+                     <input type="text" pattern="[0-9\s]{13,14}" maxlength="14" name="accountNumber" placeholder="Account Number" required>
+                     <input type="text" pattern="[0-9\s]{13,14}" maxlength="14" name="confirmAccountNumber" placeholder="Re-enter Account Number" required>
+                     <input type="text" pattern="[0-9\s]{3,7}" maxlength="7" name="amount" placeholder="Amount" required>
+                     <input type="submit" value="Transfer" class="transfer-button">
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div id="history" class="content-selection">
+            <div class="tranfer-history-contain">
+                 <h2 style="text-align: center;">Transfer History</h2>
+               <div class="tranfer-history-container">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>Date</th>
+                           <th>Description</th>
+                           <th>Amount</th>
+                           <th>Status</th>
+                        </tr>
+                     </thead>
+                     <tbody th:each="transactionDetail : ${transactionDetails}">
+                        <tr>
+                           <td th:text="${transactionDetail.date}"></td>
+                           <td th:text="${transactionDetail.description}"></td>
+                           <td th:text="${transactionDetail.amount}"></td>
+                           <td th:text="${transactionDetail.status}"></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         <div id="creditcard" class="content-selection">
+            <div class="credit-card-container">
+               <div class="credit-card-apply">
+                  <h2>Credit Card Apply</h2>
+                  <form th:action="@{/bank/home/credit/apply}" method="post">
+                     <input type="hidden" name="_method" value="patch" />
+                     <input type="hidden" name="id" th:value="${customerDetail.id}">
+                     <input type="text" pattern="[0-9\s]{3,7}" maxlength="7" name="salary" placeholder="Salary" required>
+                     <input type="hidden"  name="creditcard" th:value="${balanceDetail.creditCardBalance}">
+                     <input type="text" pattern="[a-zA-z\s]{3,35}" maxlength="35" name="companyName" placeholder="Company Name" required>
+                     <input type="text" pattern="[a-zA-z\s]{10,35}" maxlength="100" name="address" placeholder="Company Address" required>
+                     <input type="text" pattern="[0-9\s]{1,2}" maxlength="2" name="experience" placeholder="Experience" required>
+                     <input type="submit" value="Apply Now" class="apply-button">
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div id="deposit" class="content-selection">
+            <div class="deposit-container">
+               <div class="deposit-amount">
+                  <h2>Deposit</h2>
+                  <form th:action="@{/bank/deposit}" method="post">
+                     <input type="hidden" th:value="${customerDetail.id}" name="id">
+                     <input type="text" pattern="[0-9\s]{13,14}" maxlength="14" name="accountNumber" placeholder="Account number" >
+                     <input type="text" pattern="[0-9\s]{3,7}" maxlength="7" name="amount" placeholder="Amount" required>
+                     <input type="submit" value="Deposit" class="deposit-button">
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div id="forgot" class="content-selection">
+            <div class="forgotpassword-container">
+               <div class="forgot-password">
+                  <h2>Forgot Password</h2>
+                  <form th:action="@{/bank/forgotpassword}" method="post">
+                     <input type="hidden" th:value="${customerDetail.id}" name="id">
+                     <input type="password" name="password" placeholder="Password" required>
+                     <input type="password"  name="repassword" placeholder="Re-enter Password" required>
+                     <input type="submit" value="Forgot Password" class="forgot-button">
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div id="close" class="content-selection">
+            <div class="close-account-container">
+               <div class="close-account">
+                  <h2>Account Closing</h2>
+                  <form th:action="@{/bank/close}" method="post">
+                     <input type="hidden" name="id" th:value="${customerDetail.id}">
+                     <div class="row">
+                         <label for="name">Name : </label>
+                         <input type="text" name="name" th:value="${customerDetail.lastName}" id="name">
+                     </div>
+                     <div class="row">
+                          <label for="account">Account : </label> 
+                          <input type="text" name="accountNumber" th:value="${accountDetail[0].accountNumber}" id="account" readonly>
+                     </div>
+                     <div class="row">
+                          <label for="reason">Reason</label> <br>
+                          <textarea type="text" name="reason" id="reason"></textarea> <br>
+                     </div>
+                     <input type="submit" value="close" class="close-button">
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script th:src="@{/js/script.js}"></script>
+   </body>
+</html>

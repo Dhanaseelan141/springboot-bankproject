@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+     <div class="smaller-device-message">
+         <h4>To view this page, please enable desktop site mode.</h4>
+     </div>
+     <div class="content-container">
+         <div class="content-selection">
+            <h3 class="welcome-message" id="welcome" th:text="'Welcome, ' + ${username}"></h3>
+            <h1>Admin Panel</h1>
+            <div class="balance-container">
+               <div class="balance">
+                  <p>Account Holders</p>
+                  <p style="color: #26504c; font-weight: bold;" id="total-account-holders" ></p>
+               </div>
+               <div class="total-inflow">
+                  <p>Total Balance</p>
+                  <p style="color: #26504c; font-weight: bold;" id="total-balance"></p>
+               </div>
+               <div class="total-outflow">
+                  <p>Total Credit</p>
+                  <p style="color: #26504c; font-weight: bold;" id="total-credit-balance"></p>
+               </div>
+               <div class="total-outstanding">
+                  <p>Total Outstanding</p>
+                  <p style="color: #26504c; font-weight: bold;" id="total-outstanding"></p>
+               </div>
+                <div class="total-outstanding">
+                  <a th:href="@{/bank/admin/create}"><p>Create Account</p></a>
+                    <a th:href="@{/bank/forgotadmin/{id}(id=${id})}"><p>Forgot Password</p></a>
+               </div>
+            </div>
+            <div class="content-selection">
+            <div class="customer-info-contain">
+                 <h2 class="customer-heading">All Customers</h2>
+               <div class="customer-info-container">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>Name</th>
+                           <th>Account Number</th>
+                           <th>Balance</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody id="customer-details-table">
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         <div class="content-selection" id="opening-container">
+            <div class="account-opening-container">
+               <h2 class="opening-heading">Account Opening</h2>
+               <div class="account-opening">
+
+               </div>
+            </div>
+         </div>
+         <div class="content-selection">
+            <div class="account-closing-container">
+               <h2 class="closing-heading">Account Closing</h2>
+               <div class="account-closing">
+
+               </div>
+            </div>
+         </div>
+             <p style="background-color : #FF0000;color:white;text-align:center;align-items:center;height:30px;" th:if="${param.invalidadminpassword}" >The password and confirm password must be same.</p>
+     </div>
+     </div>
+     <script th:src="@{/js/adminScript.js}"></script>
+</body>
+</html>

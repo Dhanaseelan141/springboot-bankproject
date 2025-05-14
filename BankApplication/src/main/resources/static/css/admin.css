@@ -1,0 +1,180 @@
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  margin: 0;
+  /* background-color: #f5f5f5; */
+  height: 100vh;
+  overflow-x: hidden;
+  /* overflow-y:hidden; */
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif;
+}
+
+.smaller-device-message{
+    background-color: #316358;
+    display: none;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+}
+.smaller-device-message h4{
+    color: #eef6f1;
+}
+
+.content-container .balance-container {
+  display: flex;
+  margin: 20px;
+  justify-content: space-around; 
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 900px;
+  position: relative;
+  left: 20%;
+}
+.content-container .welcome-message{
+  color: #252c31;
+  padding: 20px;
+}
+.content-container h1 {
+  text-align: center;
+}
+
+.balance , .total-inflow , .total-outflow , .total-outstanding {
+  margin-top: 40px;
+  width: 150px;
+  height: 100px;
+  background-color: #eef6f1;
+  border-radius: 10px;
+  padding: 20px;
+  color: #224e47;
+  margin-bottom: 20px;
+  /* text-align: center; */
+  font-size: 18px;
+}
+
+/* Customer Info */
+.customer-info-contain .customer-heading{
+    text-align: center;
+    padding: 10px;
+    color : #242d2f;
+}
+.customer-info-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 80%;
+  margin: 0 auto;
+}
+.update-button{
+    padding : 5px 15px;
+    border-radius: 7px;
+    background-color: #316358;
+    color: white;
+    text-decoration : none;
+    text-align: center;
+    margin-top : 7px;
+    margin-bottom : 7px;
+    cursor : pointer
+}
+th {
+    color: #646366 ;
+}
+td {
+    color: #18262f;
+}
+td,
+th {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+/* Account opening */
+.opening-heading , .closing-heading{
+    text-align: center;
+    padding: 4px;
+    color : #242d2f;
+}
+.account-opening-container{
+   display : none;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+.account-closing-container{
+   display : flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.account-opening , .account-closing{
+  margin-top: 20px;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 25px;
+}
+.row {
+    margin-top: 8px;
+    font-size: 18px;
+    display: inline-block;
+    margin: 8px;
+    text-align: center;
+    padding-top: 4px;
+    padding-left: 50px;
+}
+.account-opening a , .account-closing a{
+    color: black;
+    text-decoration: none;
+}
+.account-opening-container input , .account-closing-container input{
+  background-color: white;
+  margin-left: 20px;
+  direction: ltr;
+  border: none;
+  outline: none;
+}
+
+.account-opening-container .decline-button  , .account-closing .decline-button{
+  height: 45px;
+  width: 200px;
+  border-radius: 15px;
+  margin: 10px;
+  background-color: #ff0b55;
+  color: #fdfdfe;
+}
+textarea {
+    padding: 7px;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* media query */
+@media (max-width:760px){
+    .content-container{
+        display: none;
+    }
+    .smaller-device-message{
+        display: flex;
+        align-items: center;
+
+    }
+}

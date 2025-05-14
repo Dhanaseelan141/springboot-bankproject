@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http;//www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-page-container">
+        <div class="login-page register" >
+            <h2>Ds Bank</h2>
+            <h3>Create Account</h3>
+            <form action="#" th:action="@{create}" th:object="${customer}" method="POST">
+                <input type="text" th:field="*{firstName}" placeholder="First Name" required>
+                <input type="text" th:field="*{lastName}" placeholder="Last Name" required>
+                <input type="text" th:field="*{email}" placeholder="Email" required>
+                <input type="tel" th:field="*{phoneNumber}" placeholder="Phone number" required>
+                <input type="date" th:field="*{dob}" required>
+                <input type="text" th:field="*{pan}" placeholder="Pan"   required>
+                <input type="text" th:field="*{aadhar}" placeholder="Aadhaar number" required>
+                <input type="password" th:field="*{password}" placeholder="Password" required>
+                <input type="hidden" name="role" th:value="'ROLE_CUSTOMER'" >
+                <input type="hidden" name="opening_action" th:value="'NOT_APPROVED'" >
+                <br>
+                <input type="submit" class="login-button" value="Create">
+                <p><a href="/bank/login" style="text-decoration : none;">Back to login form</a></p>
+            </form>  
+        </div>
+    </div>
+</body>
+</html>

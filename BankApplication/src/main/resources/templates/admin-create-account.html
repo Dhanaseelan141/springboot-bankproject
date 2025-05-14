@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Create account</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-page-container">
+        <div class="login-page">
+            <h2>Ds Bank</h2>
+            <h3>Admin Create Account</h3>
+            <form action="#" th:action="@{/bank/admin/create/save}" th:object="${admin}" method="post">
+                <input type="text" th:field="*{lastName}" placeholder="Surname" required>
+                <input type="password"th:field="*{adminPassword}" placeholder="password" required>
+                <input type="password" th:field="*{confirmAdminPassword}" placeholder="confirm password" required>
+                <input type="hidden" name="role" th:value="'ROLE_MANAGER'" >
+                <input type="submit" class="login-button" value="Create-account">
+                <div th:if="${error}" style="color:red;" th:text="${error}"></div>
+            </form>  
+        </div>
+    </div>
+</body>
+</html>
